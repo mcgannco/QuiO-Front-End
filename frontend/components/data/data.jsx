@@ -36,12 +36,12 @@ class Data extends React.Component {
             </div>
 
             <div className="data-items-container">
-              <div className="data-items-options">
+              <div className={this.state.dataType === "" ? "hidden" : "data-items-options"}>
                 <h3>Date</h3>
                 <h3>Value</h3>
               </div>
 
-              <ul className="data-list">
+              <ul className={!this.props.data.length? "hidden" : "data-list"}>
                 {data.map(item => <DataItem key={item.id} item={item}/>)}
               </ul>
             </div>

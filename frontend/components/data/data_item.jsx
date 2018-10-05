@@ -16,8 +16,12 @@ class DataItem extends React.Component {
       return(
         <li>
           <div className="item">
-            <h4>{this.props.item.date}</h4>
-            <h4>{this.props.item.value}</h4>
+            <nav>
+              <h4>{this.props.item.date}</h4>
+            </nav>
+            <span>
+              <h4>{this.props.item.value}</h4>
+            </span>
           </div>
         </li>
       )

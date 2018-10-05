@@ -256,9 +256,9 @@ function (_React$Component) {
       }, "Errors"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "data-items-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "data-items-options"
+        className: this.state.dataType === "" ? "hidden" : "data-items-options"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Value")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "data-list"
+        className: !this.props.data.length ? "hidden" : "data-list"
       }, data.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_data_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: item.id,
@@ -371,7 +371,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.value)));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.value))));
     }
   }]);
 
