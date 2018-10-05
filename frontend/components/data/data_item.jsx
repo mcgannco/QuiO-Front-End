@@ -17,10 +17,10 @@ class DataItem extends React.Component {
         <li>
           <div className="item">
             <nav>
-              <h4>{this.props.item.date}</h4>
+              <h4>{this.props.item.props.item.date}</h4>
             </nav>
             <span>
-              <h4>{this.props.item.value}</h4>
+              <h4>{this.props.item.props.item.value}</h4>
             </span>
           </div>
         </li>

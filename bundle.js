@@ -195,13 +195,28 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Data).call(this, props));
     _this.state = {
-      dataType: ""
+      dataType: "",
+      start: "",
+      end: "",
+      filterToggle: false
     };
     _this.selectToggle = _this.selectToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.change = _this.change.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.validateEnd = _this.validateEnd.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.changeEnd = _this.changeEnd.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.filterRange = _this.filterRange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(Data, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(props) {
+      this.setState({
+        start: props.data[0].date,
+        end: props.data[props.data.length - 1].date
+      });
+    }
+  }, {
     key: "selectToggle",
     value: function selectToggle(type) {
       this.setState({
@@ -210,11 +225,90 @@ function (_React$Component) {
       this.props.requestData(type);
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "change",
+    value: function change(e) {
+      this.setState({
+        start: e.currentTarget.value
+      });
+    }
+  }, {
+    key: "changeEnd",
+    value: function changeEnd(e) {
+      if (!this.state.start) {
+        this.setState({
+          start: this.props.data[0].data
+        });
+      }
+
+      this.setState({
+        end: e.currentTarget.value
+      });
+      this.validateEnd();
+    }
+  }, {
+    key: "filterRange",
+    value: function filterRange() {
+      this.setState({
+        filterToggle: !this.state.filterToggle
+      });
+    }
+  }, {
+    key: "validateEnd",
+    value: function validateEnd(e) {
       var _this2 = this;
 
+      if (this.state.start === "") {
+        return this.props.data.map(function (item) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            value: item.date
+          }, item.date);
+        });
+      } else {
+        if (this.state.end === "") {
+          this.setState({
+            end: this.state.start
+          });
+        } else {
+          if (this.state.end < this.state.start) {
+            this.setState({
+              end: this.state.start
+            });
+          }
+        }
+
+        return this.props.data.filter(function (item) {
+          return item.date >= _this2.state.start;
+        }).map(function (item) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            value: item.date
+          }, item.date);
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
       var data = this.props.data;
+      var filteredData = data;
+      var end;
+
+      if (data.length) {
+        end = this.validateEnd();
+      }
+
+      if (this.state.start && this.state.end) {
+        filteredData = data.filter(function (item) {
+          return item.date >= _this3.state.start && item.date <= _this3.state.end;
+        }).map(function (item) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_data_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: item.id,
+            item: item
+          });
+        });
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "data-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -226,45 +320,61 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: this.state.dataType === "bonding" ? "selected" : "",
         onClick: function onClick() {
-          return _this2.selectToggle("bonding");
+          return _this3.selectToggle("bonding");
         }
       }, "Bonding"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: this.state.dataType === "unbonding" ? "selected" : "",
         onClick: function onClick() {
-          return _this2.selectToggle("unbonding");
+          return _this3.selectToggle("unbonding");
         }
       }, "Unbonding"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: this.state.dataType === "injections" ? "selected" : "",
         onClick: function onClick() {
-          return _this2.selectToggle("injections");
+          return _this3.selectToggle("injections");
         }
       }, "Injections"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: this.state.dataType === "battery" ? "selected" : "",
         onClick: function onClick() {
-          return _this2.selectToggle("battery");
+          return _this3.selectToggle("battery");
         }
       }, "Battery"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: this.state.dataType === "temperature" ? "selected" : "",
         onClick: function onClick() {
-          return _this2.selectToggle("temperature");
+          return _this3.selectToggle("temperature");
         }
       }, "Temperature"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: this.state.dataType === "errors" ? "selected" : "",
         onClick: function onClick() {
-          return _this2.selectToggle("errors");
+          return _this3.selectToggle("errors");
         }
       }, "Errors"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "data-items-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "data-range-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.state.dataType === "" ? "hidden" : "date-range"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Start Date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: this.change,
+        value: this.state.start
+      }, data.map(function (item) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          value: item.date
+        }, item.date);
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "End Date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: this.changeEnd,
+        value: this.state.end
+      }, end)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "list-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: this.state.dataType === "" ? "hidden" : "data-items-options"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Value")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: !this.props.data.length ? "hidden" : "data-list"
-      }, data.map(function (item) {
+      }, filteredData.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_data_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: item.id,
           item: item
         });
-      }))));
+      })))));
     }
   }]);
 
@@ -371,7 +481,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.value))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.props.item.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.props.item.value))));
     }
   }]);
 
