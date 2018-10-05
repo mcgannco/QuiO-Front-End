@@ -90,21 +90,29 @@
 /*!******************************************!*\
   !*** ./frontend/actions/data_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_DATA, receiveData, requestData */
+/*! exports provided: RECEIVE_DATA, CLEAR_DATA, receiveData, clearData, requestData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DATA", function() { return RECEIVE_DATA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_DATA", function() { return CLEAR_DATA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveData", function() { return receiveData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearData", function() { return clearData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestData", function() { return requestData; });
 /* harmony import */ var _util_data_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/data_util */ "./frontend/util/data_util.js");
 
 var RECEIVE_DATA = 'RECEIVE_DATA ';
+var CLEAR_DATA = 'CLEAR_DATA ';
 var receiveData = function receiveData(data) {
   return {
     type: RECEIVE_DATA,
     data: data
+  };
+};
+var clearData = function clearData() {
+  return {
+    type: CLEAR_DATA
   };
 };
 var requestData = function requestData(str) {
@@ -128,15 +136,249 @@ var requestData = function requestData(str) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _data_data_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/data_container */ "./frontend/components/data/data_container.js");
+
 
 
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "app"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Hey"));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_data_data_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./frontend/components/data/data.jsx":
+/*!*******************************************!*\
+  !*** ./frontend/components/data/data.jsx ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _data_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data_item */ "./frontend/components/data/data_item.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
+var Data =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Data, _React$Component);
+
+  function Data(props) {
+    var _this;
+
+    _classCallCheck(this, Data);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Data).call(this, props));
+    _this.state = {
+      dataType: ""
+    };
+    _this.selectToggle = _this.selectToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(Data, [{
+    key: "selectToggle",
+    value: function selectToggle(type) {
+      this.setState({
+        dataType: type
+      });
+      this.props.requestData(type);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var data = this.props.data;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "data-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "data-title-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-medkit"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Data Type")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "data-options-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.state.dataType === "bonding" ? "selected" : "",
+        onClick: function onClick() {
+          return _this2.selectToggle("bonding");
+        }
+      }, "Bonding"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.state.dataType === "unbonding" ? "selected" : "",
+        onClick: function onClick() {
+          return _this2.selectToggle("unbonding");
+        }
+      }, "Unbonding"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.state.dataType === "injections" ? "selected" : "",
+        onClick: function onClick() {
+          return _this2.selectToggle("injections");
+        }
+      }, "Injections"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.state.dataType === "battery" ? "selected" : "",
+        onClick: function onClick() {
+          return _this2.selectToggle("battery");
+        }
+      }, "Battery"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.state.dataType === "temperature" ? "selected" : "",
+        onClick: function onClick() {
+          return _this2.selectToggle("temperature");
+        }
+      }, "Temperature"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.state.dataType === "errors" ? "selected" : "",
+        onClick: function onClick() {
+          return _this2.selectToggle("errors");
+        }
+      }, "Errors"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "data-items-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "data-items-options"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Value")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "data-list"
+      }, data.map(function (item) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_data_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          key: item.id,
+          item: item
+        });
+      }))));
+    }
+  }]);
+
+  return Data;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Data);
+
+/***/ }),
+
+/***/ "./frontend/components/data/data_container.js":
+/*!****************************************************!*\
+  !*** ./frontend/components/data/data_container.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_data_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/data_actions */ "./frontend/actions/data_actions.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data */ "./frontend/components/data/data.jsx");
+
+
+
+
+
+var msp = function msp(state) {
+  return {
+    data: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["selectData"])(state)
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    requestData: function requestData(str) {
+      return dispatch(Object(_actions_data_actions__WEBPACK_IMPORTED_MODULE_1__["requestData"])(str));
+    },
+    clearData: function clearData() {
+      return dispatch(Object(_actions_data_actions__WEBPACK_IMPORTED_MODULE_1__["clearData"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_data__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/data/data_item.jsx":
+/*!************************************************!*\
+  !*** ./frontend/components/data/data_item.jsx ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+var DataItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(DataItem, _React$Component);
+
+  function DataItem(props) {
+    var _this;
+
+    _classCallCheck(this, DataItem);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DataItem).call(this, props));
+    _this.state = {};
+    _this.deleteEntry = _this.deleteEntry.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(DataItem, [{
+    key: "deleteEntry",
+    value: function deleteEntry() {
+      this.props.deleteEntry(this.props.entry.id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.props.item.value)));
+    }
+  }]);
+
+  return DataItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (DataItem);
 
 /***/ }),
 
@@ -227,6 +469,9 @@ var dataReducer = function dataReducer() {
     case _actions_data_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_DATA"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state, action.data);
 
+    case _actions_data_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_DATA"]:
+      return {};
+
     default:
       return state;
   }
@@ -253,6 +498,25 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
   data: _data_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/selectors.js":
+/*!****************************************!*\
+  !*** ./frontend/reducers/selectors.js ***!
+  \****************************************/
+/*! exports provided: selectData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectData", function() { return selectData; });
+/* harmony import */ var lodash_values__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/values */ "./node_modules/lodash/values.js");
+/* harmony import */ var lodash_values__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_values__WEBPACK_IMPORTED_MODULE_0__);
+
+var selectData = function selectData(state) {
+  return lodash_values__WEBPACK_IMPORTED_MODULE_0___default()(state.data);
+};
 
 /***/ }),
 
@@ -1123,6 +1387,38 @@ module.exports = arrayLikeKeys;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_arrayMap.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_arrayMap.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_assignMergeValue.js":
 /*!**************************************************!*\
   !*** ./node_modules/lodash/_assignMergeValue.js ***!
@@ -1526,6 +1822,47 @@ module.exports = baseIsTypedArray;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_baseKeys.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_baseKeys.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isPrototype = __webpack_require__(/*! ./_isPrototype */ "./node_modules/lodash/_isPrototype.js"),
+    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ "./node_modules/lodash/_nativeKeys.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeys;
+
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_baseKeysIn.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_baseKeysIn.js ***!
@@ -1841,6 +2178,36 @@ function baseUnary(func) {
 }
 
 module.exports = baseUnary;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseValues.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseValues.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayMap = __webpack_require__(/*! ./_arrayMap */ "./node_modules/lodash/_arrayMap.js");
+
+/**
+ * The base implementation of `_.values` and `_.valuesIn` which creates an
+ * array of `object` property values corresponding to the property names
+ * of `props`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} props The property names to get values for.
+ * @returns {Object} Returns the array of property values.
+ */
+function baseValues(object, props) {
+  return arrayMap(props, function(key) {
+    return object[key];
+  });
+}
+
+module.exports = baseValues;
 
 
 /***/ }),
@@ -3006,6 +3373,23 @@ module.exports = nativeCreate;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_nativeKeys.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_nativeKeys.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var overArg = __webpack_require__(/*! ./_overArg */ "./node_modules/lodash/_overArg.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeKeys = overArg(Object.keys, Object);
+
+module.exports = nativeKeys;
+
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_nativeKeysIn.js":
 /*!**********************************************!*\
   !*** ./node_modules/lodash/_nativeKeysIn.js ***!
@@ -4119,6 +4503,54 @@ module.exports = isTypedArray;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/keys.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/keys.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ "./node_modules/lodash/_arrayLikeKeys.js"),
+    baseKeys = __webpack_require__(/*! ./_baseKeys */ "./node_modules/lodash/_baseKeys.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js");
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+module.exports = keys;
+
+
+/***/ }),
+
 /***/ "./node_modules/lodash/keysIn.js":
 /*!***************************************!*\
   !*** ./node_modules/lodash/keysIn.js ***!
@@ -4280,6 +4712,51 @@ function toPlainObject(value) {
 }
 
 module.exports = toPlainObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/values.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/values.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseValues = __webpack_require__(/*! ./_baseValues */ "./node_modules/lodash/_baseValues.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * Creates an array of the own enumerable string keyed property values of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property values.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.values(new Foo);
+ * // => [1, 2] (iteration order is not guaranteed)
+ *
+ * _.values('hi');
+ * // => ['h', 'i']
+ */
+function values(object) {
+  return object == null ? [] : baseValues(object, keys(object));
+}
+
+module.exports = values;
 
 
 /***/ }),

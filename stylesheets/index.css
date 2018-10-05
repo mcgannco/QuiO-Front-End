@@ -7,12 +7,155 @@ span, article, footer, time, small {
   padding: 0;
   border: 0;
   outline: 0;
-  font: sans-serif;
+  font: inherit;
   color: inherit;
   text-align: inherit;
   text-decoration: inherit;
   vertical-align: inherit;
   box-sizing: inherit;
   background: transparent;
+}
+
+ul {
   list-style: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+input[type="password"],
+input[type="email"],
+input[type="text"],
+input[type="submit"],
+textarea,
+button {
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
+
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+html {
+	height: 100%;
+	background: #fafafa;
+	font-family: 'Roboto', sans-serif;
+}
+
+body {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 12px;
+	height: 100%;
+}
+
+img {
+	width: 30px;
+	height: 20px;
+}
+
+header {
+	background: #FFFFFF;
+}
+
+#root {
+	height: 100%;
+}
+
+#app {
+	height: 100%;
+	overflow: scroll;
+  background: white;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  background: #F5F5F5;
+}
+
+.data-title-container {
+  display: flex;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.data-title-container span {
+  font-size: 100px;
+}
+
+.data-title-container span svg {
+  color: #90E2E5;
+}
+
+.data-title-container p {
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #585858;
+}
+
+.data-options-container ul {
+  display: flex;
+  margin-left: 2rem;
+  color: grey;
+}
+
+.selected {
+  border-bottom: 3px solid #90E2E5;
+}
+
+.data-options-container ul li {
+  cursor: pointer;
+  padding: 0px 40px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  font-size: 13px;
+  width: 40px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.data-items-container {
+  background: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.data-items-options {
+  display: flex;
+  width: 50%;
+  background: red;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.data-list {
+  background: white;
+  width: 50%;
+}
+
+.item {
+  display: flex;
+  background: red;
+  align-items: center;
+  justify-content: space-around;
 }
