@@ -6,7 +6,8 @@ import Data from './data';
 
 const msp = state => {
   return({
-    data: selectData(state)
+    data: selectData(state),
+    loading: state.loading
   })
 };
 

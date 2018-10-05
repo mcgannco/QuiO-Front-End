@@ -90,20 +90,23 @@
 /*!******************************************!*\
   !*** ./frontend/actions/data_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_DATA, CLEAR_DATA, receiveData, clearData, requestData */
+/*! exports provided: RECEIVE_DATA, CLEAR_DATA, LOAD, receiveData, clearData, startLoader, requestData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DATA", function() { return RECEIVE_DATA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_DATA", function() { return CLEAR_DATA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD", function() { return LOAD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveData", function() { return receiveData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearData", function() { return clearData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startLoader", function() { return startLoader; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestData", function() { return requestData; });
 /* harmony import */ var _util_data_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/data_util */ "./frontend/util/data_util.js");
 
 var RECEIVE_DATA = 'RECEIVE_DATA ';
 var CLEAR_DATA = 'CLEAR_DATA ';
+var LOAD = 'LOAD ';
 var receiveData = function receiveData(data) {
   return {
     type: RECEIVE_DATA,
@@ -115,8 +118,14 @@ var clearData = function clearData() {
     type: CLEAR_DATA
   };
 };
+var startLoader = function startLoader() {
+  return {
+    type: LOAD
+  };
+};
 var requestData = function requestData(str) {
   return function (dispatch) {
+    dispatch(startLoader());
     return _util_data_util__WEBPACK_IMPORTED_MODULE_0__["fetchData"](str).then(function (data) {
       return dispatch(receiveData(data));
     });
@@ -210,11 +219,13 @@ function (_React$Component) {
 
   _createClass(Data, [{
     key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(props) {
-      this.setState({
-        start: props.data[0].date,
-        end: props.data[props.data.length - 1].date
-      });
+    value: function componentWillReceiveProps(props, nextProps) {
+      if (props.data.length) {
+        this.setState({
+          start: props.data[0].date,
+          end: props.data[props.data.length - 1].date
+        });
+      }
     }
   }, {
     key: "selectToggle",
@@ -290,7 +301,19 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var data = this.props.data;
+      var _this$props = this.props,
+          data = _this$props.data,
+          loading = _this$props.loading;
+      var loader;
+
+      if (loading) {
+        loader = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "loading-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "lds-ripple"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)));
+      }
+
       var filteredData = data;
       var end;
 
@@ -348,7 +371,7 @@ function (_React$Component) {
           return _this3.selectToggle("errors");
         }
       }, "Errors"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "data-items-container"
+        className: loading ? "hidden" : "data-items-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "data-range-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -374,7 +397,7 @@ function (_React$Component) {
           key: item.id,
           item: item
         });
-      })))));
+      })))), loader);
     }
   }]);
 
@@ -405,7 +428,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(state) {
   return {
-    data: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["selectData"])(state)
+    data: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["selectData"])(state),
+    loading: state.loading
   };
 };
 
@@ -591,6 +615,43 @@ var dataReducer = function dataReducer() {
 
 /***/ }),
 
+/***/ "./frontend/reducers/loading_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/loading_reducer.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_data_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/data_actions */ "./frontend/actions/data_actions.js");
+
+
+
+var dataReducer = function dataReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  var newState = {};
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_data_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_DATA"]:
+      return false;
+
+    case _actions_data_actions__WEBPACK_IMPORTED_MODULE_1__["LOAD"]:
+      return true;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (dataReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/root_reducer.js":
 /*!*******************************************!*\
   !*** ./frontend/reducers/root_reducer.js ***!
@@ -602,10 +663,13 @@ var dataReducer = function dataReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _data_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data_reducer */ "./frontend/reducers/data_reducer.js");
+/* harmony import */ var _loading_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading_reducer */ "./frontend/reducers/loading_reducer.js");
+
 
 
 var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  data: _data_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  data: _data_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  loading: _loading_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
 

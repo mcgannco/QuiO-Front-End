@@ -17,8 +17,10 @@ class Data extends React.Component {
     this.filterRange = this.filterRange.bind(this);
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({start: props.data[0].date, end: props.data[props.data.length -1].date})
+  componentWillReceiveProps(props, nextProps) {
+    if(props.data.length) {
+      this.setState({start: props.data[0].date, end: props.data[props.data.length -1].date})
+    }
   }
 
   selectToggle(type) {
@@ -58,7 +60,13 @@ class Data extends React.Component {
   }
 
   render() {
-    const {  data } = this.props;
+    const {  data, loading } = this.props;
+    let loader;
+    if(loading) {
+      loader = <div className="loading-container">
+        <div className="lds-ripple"><div></div><div></div></div>
+      </div>
+    }
     let filteredData = data;
     let end;
     if(data.length) {
@@ -86,7 +94,7 @@ class Data extends React.Component {
               </ul>
             </div>
 
-            <div className="data-items-container">
+            <div className={loading ? "hidden" : "data-items-container"}>
               <div className="data-range-container">
                 <div className={this.state.dataType === "" ? "hidden" : "date-range"}>
                   <nav>
@@ -118,6 +126,7 @@ class Data extends React.Component {
                 </ul>
               </div>
             </div>
+            {loader}
           </div>
       )
     }

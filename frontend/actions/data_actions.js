@@ -1,6 +1,7 @@
 import * as APIUtil from '../util/data_util';
 export const RECEIVE_DATA  = 'RECEIVE_DATA ';
 export const CLEAR_DATA  = 'CLEAR_DATA ';
+export const LOAD  = 'LOAD ';
 
 export const receiveData = (data) => (
   {
@@ -15,6 +16,16 @@ export const clearData = () => (
   }
 );
 
-export const requestData = (str) => dispatch => (
-  APIUtil.fetchData(str).then(data => (dispatch(receiveData(data)))
-));
+export const startLoader = () => (
+  {
+    type: LOAD,
+  }
+);
+
+export const requestData = (str) => dispatch => {
+  dispatch(startLoader());
+  return (
+    APIUtil.fetchData(str).then(data => (dispatch(receiveData(data)))
+    )
+  )
+}
